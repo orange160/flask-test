@@ -13,7 +13,7 @@ from flaskp.extensions import mail
 
 def send_mail():
     msg = Message("Hello",
-                  sender=config.MAIL_USERNAME,
+                  sender=('MMao', config.MAIL_USERNAME),
                   recipients=["lyjorange2019@126.com"])
     msg.html = "<b>testing</b>"
     mail.send(msg)
