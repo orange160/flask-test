@@ -9,7 +9,6 @@ import time
 
 from flask import Blueprint
 
-from flaskp.utils.mail_utils import send_mail
 
 bp = Blueprint('home', __name__, url_prefix='/')
 
@@ -21,7 +20,4 @@ def homepage():
 
 @bp.route('/mail')
 def home_send_mail():
-    print('start to send mail')
-    send_mail()
-    print('send mail done')
     return '%s' % time.time()

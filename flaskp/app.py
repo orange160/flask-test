@@ -8,7 +8,7 @@
 from flask import Flask
 
 import config
-from flaskp.extensions import mail
+from flaskp.extensions import mail, celery
 
 
 def create_app():
@@ -17,6 +17,7 @@ def create_app():
     configure_app(app)
     configure_blueprints(app)
     configure_extensions(app)
+    configure_celery_app(app, celery)
 
     return app
 
@@ -32,3 +33,16 @@ def configure_blueprints(app):
 
 def configure_extensions(app):
     mail.init_app(app)
+
+
+def configure_celery_app(app, celery_app):
+    celery_app.config_from_object('celeryconfig')
+
+    TaskBase = celery_app.Task
+
+    class ContextTask(TaskBase):
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+
+    celery_app.Task = ContextTask
