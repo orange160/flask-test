@@ -24,7 +24,7 @@ def send_mail():
     MAIL_DEBUG = 0  # 0--关闭调试 1--开启调试
     """
     msg = Message("Hello",
-                  sender=config.MAIL_USERNAME,
+                  sender=('MMao', config.MAIL_USERNAME),
                   recipients=["lyjorange2019@126.com"])
     msg.html = "<b>testing</b>"
     mail.send(msg)
